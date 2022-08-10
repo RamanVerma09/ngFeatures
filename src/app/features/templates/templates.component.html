@@ -1,0 +1,131 @@
+<p>ng template 1</p>
+
+Ng template is an Angular element, which contains the template. A template is HTML snippet.
+The template does not render to DOM by itself.
+Ways to display ngtemplate are:
+1. using ngTemplateOutlet
+2. using property bindings
+3. using templateRef and containerRef
+
+However, note that ng-template is always used along with structural derivatives 
+such as ngIf, ngFor, and ngSwitch. It is used for grouping content that is not rendered, 
+but that can be used in other parts of your code.
+
+You can not use multiple structural directive in ngtemplate. For that, you need to use 
+ngContainer to move one directive
+
+You'll find that the output doesn't render 'Ng Template contents', but only the text inside the <div> element.
+
+    This is because ng-template only defines a template, but doesn't let Angular know the conditions for displaying it.
+
+<ng-template #xyz>
+    Hello
+</ng-template>
+
+<div *ngTemplateOutlet="xyz">
+</div>
+==============================
+<p>ng template 2 using property binding</p>
+
+<ng-template [ngIf]="true">
+    Hello
+</ng-template>
+==============================
+<p>ng template using div if else</p>
+
+<input [(ngModel)]="selected" type="checkbox">Select Me
+
+<div *ngIf="selected; then hello else bye"></div>
+lllll
+<ng-template #hello>
+    <ng-content></ng-content>
+    Hello
+</ng-template>
+<ng-template #bye>
+    Bye
+</ng-template>
+
+<div *ngIf="selected">
+    You are selected
+</div>
+
+==============================
+<p>ng template using ng template if else</p>
+
+<ng-template [ngIf]="selected" [ngIfThen]="hello" [ngIfElse]="bye"></ng-template>
+
+==============================
+<p>ng template using ng template ngFor</p>
+
+<div *ngFor="let item of [1,2,3,4]; let even=even; let i=index; trackBy:trackById">
+    {{item}}-{{even}}-{{i}}
+</div>
+
+<ng-template ngFor let-item [ngForOf]="[1,2,3,4]" let-i="index" let-even="even" [ngForTrackBy]="trackById">
+    {{item}}-{{even}}-{{i}}
+</ng-template>
+
+<br/>
+
+///////////////////////////////////
+
+ng container
+
+it create section in template without introducing new html element.
+ng-container does not render into DOM but content inside it gets rendered.
+
+<ng-container *ngTemplateOutlet="hello">
+    abcd
+</ng-container>
+
+<br/>
+
+ng template ngTemplateOutlet
+
+it is structural directive.It is used to insert template (created by ngtemplate) 
+in various section of DOM
+Is also used to pass data
+
+<div *ngTemplateOutlet="bye">
+    KK
+</div> 
+ 
+<ng-template #template1 let-value="value" let-name>  
+    {{value}} - {{name}}
+    <p>This is our template. It will be displayed on the div *ngTemplateOutlet="myTemplateRef"</p>
+  </ng-template>
+
+  <ng-container *ngTemplateOutlet="template1; context: {value:'100', $implicit:'Guest'}">
+    This text is not displayed
+  </ng-container> 
+  <app-child-template [byeTemplate]="bye">
+    <div style="color:red; background:yellow">Yo you honey singh</div>
+  </app-child-template>
+
+
+<br/>
+
+ngContent used to add external/dynamic content into template. IT act as a place holder
+Content projection used to pass data from parent component to child component and also
+used to pass HTML content (along with CSS). It is not limited to data only.
+
+<ng-content>
+
+</ng-content>
+
+multiple projection: when we create different content in parent and each of those
+content can be projected into any of slots depending on their selector.
+To implement this, we can use select attribute 
+* ngcontent without selector tags in parent can use use using ng- content without any selector in child
+<app-child-template>
+    <header>
+        header
+    </header>
+    <footer>
+        footer
+    </footer>
+
+    <ng-container ngProjectAs="cont">
+        hello container ng project as
+    </ng-container>
+</app-child-template>
