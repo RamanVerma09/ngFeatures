@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { ElementComponent } from './features/element/element.component';
 import { TemplatesComponent } from './features/templates/templates.component';
 import { ChildTemplateComponent } from './features/child-template/child-template.component';
+import { RxjsOperatorsComponent } from './features/rxjs-operators/rxjs-operators.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ElementComponent,
     TemplatesComponent,
-    ChildTemplateComponent
+    ChildTemplateComponent,
+    RxjsOperatorsComponent
   ],
   imports: [
     BrowserModule,
